@@ -1,0 +1,40 @@
+import tkinter as tk
+from tkinter import Canvas
+
+class ASTVisualizer:
+    def __init__(self, root, ast):
+        self.canvas = Canvas(root, width=600, height=400, bg="white")
+        self.canvas.pack()
+        self.draw_ast(ast, 300, 50, 150)
+
+    def draw_ast(self, node, x, y, offset):
+        if node is None:
+            return
+        
+        # Draw node based on type
+        if node.type == 'Number':
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightblue")
+            self.canvas.create_text(x, y, text=str(node.value), font=("Arial", 10))
+        elif node.type == 'Variable':
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightgreen")
+            self.canvas.create_text(x, y, text=node.value, font=("Arial", 10))
+        elif node.type == 'Assign':
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightcoral")
+            self.canvas.create_text(x, y, text=f"{node.value} = ", font=("Arial", 10))
+        elif node.type == 'IfElse':
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightyellow")
+            self.canvas.create_text(x, y, text="if", font=("Arial", 10))
+        elif node.type == 'WhileLoop':
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightpink")
+            self.canvas.create_text(x, y, text="while", font=("Arial", 10))
+        else:
+            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightblue")
+            self.canvas.create_text(x, y, text=node.type, font=("Arial", 10))
+
+        # Draw left and right children if they exist
+        if node.left:
+            self.canvas.create_line(x, y+20, x-offset, y+70)
+            self.draw_ast(node.left, x-offset, y+100, offset//2)
+        if node.right:
+            self.canvas.create_line(x, y+20, x+offset, y+70)
+            self.draw_ast(node.right, x+offset, y+100, offset//2)
