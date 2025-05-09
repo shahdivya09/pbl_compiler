@@ -15,9 +15,6 @@ class ASTVisualizer:
         if node.type == 'Number':
             self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightblue")
             self.canvas.create_text(x, y, text=str(node.value), font=("Arial", 10))
-        elif node.type == 'Variable':
-            self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightgreen")
-            self.canvas.create_text(x, y, text=node.value, font=("Arial", 10))
         elif node.type == 'Assign':
             self.canvas.create_oval(x-20, y-20, x+20, y+20, fill="lightcoral")
             self.canvas.create_text(x, y, text=f"{node.value} = ", font=("Arial", 10))
